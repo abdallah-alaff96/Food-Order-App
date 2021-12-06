@@ -29,7 +29,9 @@ const CartProvider = (props) => {
     dispatchedCartAction({ type: "Add", item: item });
   };
 
-  const removeItemFromCartHandler = (id) => {};
+  const removeItemFromCartHandler = (id) => {
+    dispatchedCartAction({ type: "Remove", id: id });
+  };
 
   const cartContext = {
     items: cartState.items,
