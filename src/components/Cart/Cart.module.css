@@ -3,7 +3,17 @@
   margin: 0;
   padding: 0;
   max-height: 20rem;
-  overflow: scroll;
+  overflow: auto;
+}
+
+.cart-items {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+/* for chrome, safari and opera */
+.cart-items::-webkit-scrollbar {
+  display: none;
 }
 
 .total {
