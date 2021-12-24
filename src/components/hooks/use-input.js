@@ -25,7 +25,7 @@ const useInput = (validateInputFunction) => {
 
   return {
     enteredInput,
-    isTouched,
+    inputIsValid,
     inputChangeHandler,
     blurInputHandler,
     hasError,
