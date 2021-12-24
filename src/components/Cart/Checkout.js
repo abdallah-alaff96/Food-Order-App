@@ -18,7 +18,7 @@ const Checkout = (props) => {
   };
 
   return (
-    <form onSubmit={submitHandler}>
+    <form className={classes.form} onSubmit={submitHandler}>
       <div
         className={
           nameHasError
@@ -52,7 +52,7 @@ const Checkout = (props) => {
         <button type="button" onClick={props.onCancel}>
           Cancel
         </button>
-        <button>Confirm</button>
+        <button className={classes.submit}>Confirm</button>
       </div>
     </form>
   );
