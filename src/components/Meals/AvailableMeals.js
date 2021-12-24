@@ -6,12 +6,16 @@ import { useEffect, useState } from "react";
 const AvailableMeals = (props) => {
   const [meals, setMeals] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [httpError, setHttpError] = useState();
 
   useEffect(() => {
     const fetchMeals = async () => {
       const response = await fetch(
         "https://react-http-1db30-default-rtdb.firebaseio.com/meals.json"
       );
+      if (!response.ok) {
+        throw new Error("Something went wrong");
+      }
       const responseData = await response.json();
 
       const loadedMeals = [];
@@ -26,7 +30,10 @@ const AvailableMeals = (props) => {
       setMeals(loadedMeals);
       setIsLoading(false);
     };
-    fetchMeals();
+    fetchMeals().catch((error) => {
+      setIsLoading(false);
+      setHttpError(error.message);
+    });
   }, []);
 
   const mealsList = meals.map((meal) => (
@@ -39,8 +46,14 @@ const AvailableMeals = (props) => {
     />
   ));
 
-  // two choices to view
+  // loading choice
   const loadingParagraph = <p className={classes.MealsLoading}>loading...</p>;
+  // two choices to view
+  const errorParagra = (
+    <section>
+      <p className={classes.MealsError}>{httpError}</p>
+    </section>
+  );
   const mealsListSection = (
     <section className={classes.meals}>
       <Cards>
@@ -48,9 +61,9 @@ const AvailableMeals = (props) => {
       </Cards>
     </section>
   );
-  const listToView = isLoading ? loadingParagraph : mealsListSection;
+  const listToView = httpError ? errorParagra : mealsListSection;
 
-  return listToView;
+  return isLoading ? loadingParagraph : listToView;
 };
 
 export default AvailableMeals;
