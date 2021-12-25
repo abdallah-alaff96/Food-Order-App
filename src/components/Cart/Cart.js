@@ -54,6 +54,28 @@ const Cart = (props) => {
     </div>
   );
 
+  const postDataToBackend = async (personalInformaion) => {
+    const response = await fetch(
+      "https://react-http-1db30-default-rtdb.firebaseio.com/orders.json",
+      {
+        method: "POST",
+        body: JSON.stringify({
+          useData: personalInformaion,
+          orderedItems: cartCtx.items,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const data = response.json();
+    console.log(data);
+  };
+
+  const submitOrderHandler = (personalInformaion) => {
+    postDataToBackend(personalInformaion);
+  };
+
   return (
     <Modal onClose={props.onClose}>
       {cartItems}
@@ -61,7 +83,9 @@ const Cart = (props) => {
         <span>Total Amount</span>
         <span>{totalAmount}</span>
       </div>
-      {isCheckout && <Checkout onCancel={props.onClose} />}
+      {isCheckout && (
+        <Checkout onConfirm={submitOrderHandler} onCancel={props.onClose} />
+      )}
       {!isCheckout && modalActions}
     </Modal>
   );

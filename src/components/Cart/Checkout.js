@@ -1,4 +1,3 @@
-import { useState } from "react";
 import useInput from "../hooks/use-input";
 import classes from "./Checkout.module.css";
 
@@ -46,11 +45,18 @@ const Checkout = (props) => {
     formIsValid = true;
   }
 
+  const personalInformaion = {
+    name: nameInput,
+    street: streetInput,
+    postal: postalInput,
+    city: cityInput,
+  };
+
   const submitHandler = (event) => {
     event.preventDefault();
 
     // Submit the form
-    console.log("submitted");
+    props.onConfirm(personalInformaion);
 
     nameReset();
     streetReset();
